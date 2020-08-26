@@ -33,18 +33,18 @@ fun Canvas.drawTCenterBallToEdge(scale : Float, w : Float, h : Float, paint : Pa
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
     val size : Float = Math.min(w, h) / sizeFactor
-    val sf1 : Float = sf.divideScale(0, parts)
-    val sf2 : Float = sf.divideScale(1, parts)
-    val sf3 : Float = sf.divideScale(2, parts)
-    val sf4 : Float = sf.divideScale(3, parts)
+    val sf1 : Float = sf.divideScale(0, parts + 1)
+    val sf2 : Float = sf.divideScale(1, parts + 1)
+    val sf3 : Float = sf.divideScale(2, parts + 1)
+    val sf4 : Float = sf.divideScale(3, parts + 1)
     val r : Float = size / rFactor
     save()
     translate(w / 2, h / 2)
     for (j in 0..(lines - 1)) {
         save()
-        rotate(rot * sf2)
+        rotate(rot * sf2 * j)
         drawLine(0f, 0f, size * sf1 + size * (j % 2) * sf2, 0f, paint)
-        drawCircle(size * sf4, 0f, r * sf3, paint)
+        drawCircle(size * (1 + (j % 2))* sf4, 0f, r * sf3, paint)
         restore()
     }
     restore()
@@ -53,7 +53,7 @@ fun Canvas.drawTCenterBallToEdge(scale : Float, w : Float, h : Float, paint : Pa
 fun Canvas.drawTCBENode(i : Int, scale : Float, paint : Paint) {
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
-    paint.color = foreColor
+    paint.color = colors[i]
     paint.strokeCap = Paint.Cap.ROUND
     paint.strokeWidth = Math.min(w, h) / strokeFactor
     drawTCenterBallToEdge(scale, w, h, paint)
