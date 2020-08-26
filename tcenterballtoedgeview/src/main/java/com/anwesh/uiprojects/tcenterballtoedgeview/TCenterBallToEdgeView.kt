@@ -185,4 +185,27 @@ class TCenterBallToEdgeView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : TCenterBallToEdgeView) {
+
+        private val animator : Animator = Animator(view)
+        private val tcbe : TCenterBallToEdge = TCenterBallToEdge(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun render(canvas : Canvas) {
+            canvas.drawColor(foreColor)
+            tcbe.draw(canvas, paint)
+            animator.animate {
+                tcbe.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            tcbe.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
