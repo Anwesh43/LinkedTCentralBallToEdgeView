@@ -33,10 +33,10 @@ fun Canvas.drawTCenterBallToEdge(scale : Float, w : Float, h : Float, paint : Pa
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
     val size : Float = Math.min(w, h) / sizeFactor
-    val sf1 : Float = scale.divideScale(0, parts)
-    val sf2 : Float = scale.divideScale(1, parts)
-    val sf3 : Float = scale.divideScale(2, parts)
-    val sf4 : Float = scale.divideScale(3, parts)
+    val sf1 : Float = sf.divideScale(0, parts)
+    val sf2 : Float = sf.divideScale(1, parts)
+    val sf3 : Float = sf.divideScale(2, parts)
+    val sf4 : Float = sf.divideScale(3, parts)
     val r : Float = size / rFactor
     save()
     translate(w / 2, h / 2)
@@ -208,6 +208,15 @@ class TCenterBallToEdgeView(ctx : Context) : View(ctx) {
             tcbe.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+
+        fun create(activity: Activity) : TCenterBallToEdgeView {
+            val view : TCenterBallToEdgeView = TCenterBallToEdgeView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
